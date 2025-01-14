@@ -1,0 +1,35 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+#container
+{
+    border: 1px solid #000;
+    height: 300px;
+    width: 300px;
+    position: relative;
+}
+
+#container #player
+{
+    position: absolute;
+    height: 23px;
+    width: 23px;
+    border: 1px solid #f00;
+    top: 0;
+    left: 0;
+}
+
+#invButton
+{
+    cursor: pointer;
+    height: 17px;
+    width: 75px;
+    margin-left: 13px;
+    border: 1px solid #000;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container" height="300px" width="300px">
+        <div id="player"></div>
+        <div id="item"></div>
+    </div>
+    <div id="controls">
+        <button id="invButton">inv
+        </button>
+    </div>
+    <div id="inv">
+        <div id="cube0">
+            <div id="slot"></div>
+            <div id="slot"></div>
+            <div id="slot"></div>
+            <div id="slot"></div>
+        </div>
+        <div id="cube1">
+            <div id="slot"></div>
+            <div id="slot"></div>
+            <div id="slot"></div>
+            <div id="slot"></div>
+        </div>
+        <div id="cube2">
+            <div id="slot"></div>
+            <div id="slot"></div>
+            <div id="slot"></div>
+            <div id="slot"></div>
+        </div>
+        <div id="cube3">
+            <div id="slot"></div>
+            <div id="slot"></div>
+            <div id="slot"></div>
+            <div id="slot"></div>
+        </div>
+    </div>
+    <style>
+        #inv #cube0
+        {
+            width: 100%;
+            height: 18px;
+            display: flex;
+            flex-direction: row;
+        }
+        #cube1
+        {
+            margin-top: 20px;
+            width: 100%;
+            height: 18px;
+            display: flex;
+            flex-direction: row;
+        }
+        #cube2
+        {
+            margin-top: 22px;
+            width: 100%;
+            height: 18px;
+            display: flex;
+            flex-direction: row;
+        }
+        #cube3
+        {
+            margin-top: 22px;
+            width: 100%;
+            height: 18px;
+            display: flex;
+            flex-direction: row;
+        }
+        #slot
+        {
+            height: 40px;
+            width: 40px;
+            border: 1px solid #000;
+        }
+    </style>
+    <div id="debug">
+        <div id="coordinates">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

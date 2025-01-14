@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethoria</title>
+</head>
+<body>
+    <section>
+        <style>
+            *
+            {
+                margin: 0;
+                padding: 0;
+                outline: 0;
+                border: 0;
+                box-sizing: border-box;
+                background: #000;
+            }
+
+            #player
+            {
+                height: 23px;
+                width: 23px;
+                background-color: blue;
+            }
+
+            #inGame
+            {
+                height: 300px;
+                width: 300px;
+                border: 1px solid #fff;
+            }
+
+            #down
+            {
+                transform: rotate(90deg);
+            }
+
+            #up
+            {
+                transform: rotate(270deg);
+            }
+
+            #container
+            {
+                height: 100vh;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #bottom
+            {
+                height: 33px;
+                width: 350px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .control
+            {
+                cursor: pointer;
+                height: 27px;
+                width: 27px;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 17px;
+                color: #fff;
+                border: 1px solid #fff;
+            }
+
+            #compiler
+            {
+                color: #0f0;
+                border: 1px solid #fff;
+                height: 23px;
+                width: 100px;
+            }
+        </style>
+        <div id="container">
+            <div id="sideTime"></div>
+            <div id="gameCanvas">
+                <div id="inGame">
+                    <div id="entity"></div>
+                    <div id="player"></div>
+                </div>
+                <div id="bottom">
+                    <button id="addE" class="control">Add entity test</button>
+                    <button id="left" class="control"><</button>
+                    <button id="right" class="control">></button>
+                    <button id="down" class="control">></button>
+                    <button id="up" class="control">></button>
+                    <div id="compiler"></div>
+                </div>
+            </div>
+            <div id="Control"></div>
+        </div>
+    </section>
+    <script>
+    let gameCanvas = document.getElementById("inGame");
+    let gameCanvasH = gameCanvas.offsetHeight;
+    let gameCanvasW = gameCanvas.offsetWidth;
+
+    let buttonL = document.getElementById("left");
+    let buttonR = document.getElementById("right");
+    let buttonD = document.getElementById("down");
+    let buttonU = document.getElementById("up");
+
+    let player = document.getElementById("player");
+
+    var playerCoordX = 0;
+    var playerCoordY = 0;
+
+    buttonR.onclick = function()
+    {
+        playerCoordX += 10;
+        player.style.marginLeft = playerCoordX + "px";
+    }
+
+    buttonL.onclick = function()
+    {
+        playerCoordX -= 10;
+        player.style.marginLeft = playerCoordX + "px";
+    }
+
+    buttonD.onclick = function()
+    {
+        playerCoordY += 10;
+        player.style.marginTop = playerCoordY + "px";
+    }
+
+    buttonU.onclick = function()
+    {
+        playerCoordY -= 10;
+        player.style.marginTop = playerCoordY + "px";
+    }
+
+    function addEntity()
+    {
+        let entity = document.getElementById("entity");
+        let entityCoordX = Math.floor(Math.random() * gameCanvasW);
+        let entityCoordY = Math.floor(Math.random() * gameCanvasH);
+        entity.style.height = "23px";
+        entity.style.width = "23px";
+        entity.style.position = "absolute";
+        entity.style.backgroundColor = "#0000";
+        entity.style.border = "1px solid #f00";
+        entity.style.marginLeft = entityCoordX + "px";
+        entity.style.marginTop  = entityCoordY + "px";
+    }
+
+    function collisionWithEntity(block1, block2, block3, block4)
+    {
+        if (
+            (block1 > block3 && block1 < block4) ||
+            (block2 > block3 && block2 < block4)
+        )
+        {
+            return true; 
+        }
+    }
+
+    let addEntityButton = document.getElementById("addE");
+    addEntityButton.onclick = function()
+    {
+        addEntity();
+    }
+
+    let compiler = document.getElementById("compiler");
+    if(collisionWithEntity(playerCoordX, playerCoordY, entityCoordX, entityCoordY) == true)
+    {
+        compiler.innerHTML = "collision";
+    }
+    </script>
+</body>
+</html>

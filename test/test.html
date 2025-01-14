@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <div id="player"></div>
+    </div>
+    <div id="buttons">
+        <button id="left">Left</button>
+        <button id="down">Down</button>
+        <button id="up">up</button>
+        <button id="right">right</button>
+        <div id="coordinates"></div>
+        <button id="OPinventory">inv</button>
+    </div>
+    <div id="invContainer">
+    <div id="inventory"></div>
+    </div>
+    <style>
+        #invContainer
+        {
+            position: absolute;
+            z-index: -1;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #inventory
+        {
+            position: absolute;
+            z-index: 1;
+            height: 300px;
+            width: 400px;
+            border: 1px solid #000;
+            background: #0ff;
+        }
+        #buttons
+        {
+            position: absolute;
+            margin-top: 91%;
+        }
+    </style>
+    <script src="script.js"></script>
+</body>
+</html>

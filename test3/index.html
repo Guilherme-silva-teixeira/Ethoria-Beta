@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container" style="width: 400px; height: 400px; border: 1px solid black; position: relative;">
+        <div id="player" style="width: 50px; height: 50px; background-color: red; position: absolute; top: 0; left: 0;"></div>
+        <div id="item" style="width: 50px; height: 50px; background-color: blue; position: absolute; top: 200px; left: 200px;"></div>
+      </div>
+      <style>
+        #container {
+  width: 400px;
+  height: 400px;
+  border: 1px solid black;
+  position: relative;
+}
+
+#player {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#item {
+  width: 50px;
+  height: 50px;
+  background-color: blue;
+  position: absolute;
+  top: 200px;
+  left: 200px;
+}
+      </style>
+
+      <script>
+        const container = document.getElementById('container');
+const player = document.getElementById('player');
+const item = document.getElementById('item');
+
+let playerX = 0;
+let playerY = 0;
+
+document.addEventListener('keydown', (e) => {
+  switch (e.key) {
+    case 'ArrowUp':
+      playerY -= 10;
+      break;
+    case 'ArrowDown':
+      playerY += 10;
+      break;
+    case 'ArrowLeft':
+      playerX -= 10;
+      break;
+    case 'ArrowRight':
+      playerX += 10;
+      break;
+  }
+
+  player.style.top = `${playerY}px`;
+  player.style.left = `${playerX}px`;
+
+  // Verifica se o player está dentro do container
+  if (playerX < 0) {
+    playerX = 0;
+  } else if (playerX > container.offsetWidth - player.offsetWidth) {
+    playerX = container.offsetWidth - player.offsetWidth;
+  }
+
+  if (playerY < 0) {
+    playerY = 0;
+  } else if (playerY > container.offsetHeight - player.offsetHeight) {
+    playerY = container.offsetHeight - player.offsetHeight;
+  }
+});
+      </script>
+</body>
+</html>

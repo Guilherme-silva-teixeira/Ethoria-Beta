@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <div id="player">
+        </div>
+        <div id="item">
+        </div>
+        <style>
+            #item
+            {
+                position: absolute;
+                margin-top: 100px;
+                margin-left: 100px;
+                z-index: 1;
+            }
+        </style>
+    </div>
+    <div id="controls">
+        <button id="left">left</button>
+        <button id="right">right</button>
+        <button id="up">up</button>
+        <button id="down">down</button>
+        <button id="inv">inv</button>
+    </div>
+    <div id="debug">
+        <div id="coordinates"></div>
+        <div id="playerValue"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
