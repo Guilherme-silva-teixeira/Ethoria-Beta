@@ -1,0 +1,111 @@
+    *
+        {
+            margin: 0;
+            padding: 0;
+            outline: 0;
+            border: 0;
+            box-sizing: border-box;
+        }
+
+        body
+        {
+            background: #000;
+        }
+
+        #container
+        {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        } 
+
+        #gameCanvas
+        {
+            height: 529px;
+            width: 529px;
+            border: 3px solid #fff;
+            position: relative;
+        }
+
+        #player
+        {
+            height: 23px;
+            width: 23px;
+            background: #f00;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #item
+        {
+            height: 13px;
+            width: 13px;
+            background: #0f0;
+            position: absolute;
+            top: 133px;
+            left: 130px;
+        }
+
+        .chunk {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #555;
+            cursor: pointer;
+        }
+
+        .chunk:hover {
+            border-color: white;
+        }
+
+        #player {
+            position: absolute;
+            height: 23px;
+            width: 23px;
+            background: red;
+            transition: transform 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+        }
+
+        #container {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #gameCanvas {
+            position: relative;
+            overflow: hidden;
+            width: 529px;
+            height: 529px;
+            display: grid;
+            grid-template-columns: repeat(16, 1fr);
+            grid-template-rows: repeat(16, 1fr);
+            gap: 0;
+            border: 3px solid #fff;
+        }
+
+#debug
+{
+    color: #fff;
+}
+
+#debug1
+{
+    color: #fff;
+}
