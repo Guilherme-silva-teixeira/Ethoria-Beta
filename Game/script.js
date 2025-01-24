@@ -5,6 +5,8 @@
         let player = document.getElementById("player");
         let item = document.getElementById("item");
         let inventoryContainer = document.getElementById("inventory");
+        let block = document.getElementById("block");
+        let controlButtons = document.getElementById("buttonControls");
 
         //-----------------CHUNK AND PLAYER VARIABLES-----------------//
 
@@ -127,8 +129,66 @@
                 debug1.innerText = "No collision.";
             }
 
-            debug.innerText = `Player Position: (${playerCoordX}, ${playerCoordY})`;
             
+            let block1 = document.getElementById("block");
+            let blockRect = block1.getBoundingClientRect();
+            let debug6 = document.getElementById("debug6").innerHTML = blockRect.left + " - " + blockRect.top;
+
+            debug.innerText = `Player Position: (${playerCoordX}, ${playerCoordY})`;
+        
+            //=======PLAYER MOVIMENT DECLARATION=======
+            ///////==CHECK COLLISION WITH BLOCK
+
+            let isDropped = false;
+            let controlButtons = document.getElementById("controlButtons");
+
+            function breakInnerBlock()
+            {
+                return true;
+            }
+
+            //Break button events
+
+            if(checkCollision(block, player))
+            {
+                controlButtons.innerHTML = `
+                    <button id="breakerButton">Break Block</button>
+                `;
+
+                const breakerButton = document.getElementById("breakerButton");
+                breakerButton.addEventListener("click", function ()
+                {
+                    if(breakBlock())
+                        {
+                            block.style.animationName = "drop";
+                            block.style.animationDuration = "infinite";
+                            isDropped = true;
+                        }
+                });
+            }
+            else
+            {
+                const breakerButton = document.getElementById("breakerbutton");
+                if(breakerButton)
+                {
+                    breakerButton.remove();
+                }
+            }
+
+
+            //Dropped block styles
+            if(isDropped)
+            {
+                block.style.animationName = "drop";
+                block.style.animationDuration = "infinite";
+            }
+            else
+            {
+                block.style.animationName = "";
+                block.style.animationDuration = "0s";
+            }
+
+
         });
         // Inicializar o jogo
         placeItem();
@@ -186,8 +246,16 @@
         sword.style.height = "49px";
         sword.style.width = "49px";
         sword.style.border = "1px solid #00f";//provisory
-        sword.style.backgroundImage = "url(/main/textures/WeaponsW.png)";
-        sword.style.backgroundPosition = "-3px -342px";
+        sword.style.backgroundImage = "url(/main/textures/weaponsW.png)";
+        sword.style.backgroundPosition = "0px -339px";
+        sword.style.backgroundSize = "auto";
+
+        hammer.style.height = "49px";
+        hammer.style.width = "49px";
+        hammer.style.border = "1px solid #ff0";
+        hammer.style.backgroundImage = "url(/Main/textures/weaponsW.png)";
+        hammer.style.backgroundPosition = "-293px -289px";
+
         //-----------------PLAYER STATS-----------------//
         //FLOAT
 
