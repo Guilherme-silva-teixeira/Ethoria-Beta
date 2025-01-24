@@ -55,6 +55,7 @@
                 checkCollisionPlayer();
                 player.style.transform = `translate(${playerCoordX}px, ${playerCoordY}px)`;
                 debug.innerHTML = `Click player coordinates:  ${playerCoordX} , ${playerCoordY}`;
+                    
             });
         }
 
