@@ -1,173 +1,196 @@
-const container = document.getElementById("container");
+        //-------------=-{   THE LEGENDS OF ETHORIA   }-=----------------//
+        //------------- Game By Guilherme Silva Teixeira -------------//
+        //-----------------MAIN VARIABLES-----------------//
+        let gameCanvas = document.getElementById("gameCanvas");
+        let player = document.getElementById("player");
+        let item = document.getElementById("item");
+        let inventoryContainer = document.getElementById("inventory");
 
+        //-----------------CHUNK AND PLAYER VARIABLES-----------------//
 
-    const item = document.getElementById("item");
+        let chunkSize = 529 / 16;
+        let playerCoordX = 0;
+        let playerCoordY = 0;
 
-    let playerCoordX = 0;
-    let playerCoordY = 0;
+        //-----------------DEBUG VARIABLES-----------------//
+        let debug = document.getElementById("debug");
+        let debug1 = document.getElementById("debug1");
+        let debug3 = document.getElementById("debug3");
 
-    const debug = document.getElementById("debug");
-    const debug1 = document.getElementById("debug1");
+        //-----------------ADDITIONAL STYLES (MAIN)-----------------//
 
-    
+        inventoryContainer.style.color = "#fff";
+        debug5.style.color = "#fff";
 
-    const gameCanvas = document.getElementById("gameCanvas");
-        const player = document.getElementById("player");
+        //-----------------GENERATE ITEM-----------------//
+        function placeItem() {
+            const randomChunk = Math.floor(Math.random() * 256);
+            const chunkRow = Math.floor(randomChunk / 16);
+            const chunkCol = randomChunk % 16;
 
-        const chunkSize = 529 / 16; // Tamanho de um chunk para 4x4 grid
-        let playerX = 0; // Posição X do jogador no mundo
-        let playerY = 0; // Posição Y do jogador no mundo
+            const itemX = chunkCol * chunkSize + chunkSize / 2 - item.offsetWidth / 2;
+            const itemY = chunkRow * chunkSize + chunkSize / 2 - item.offsetHeight / 2;
+            //debug3 recreation
 
-        // Criar os chunks
-        for (let i = 0; i < 256; i++) {
+            item.style.transform = `translate(${itemX}px, ${itemY}px)`;
+            debug3.innerHTML = `Item Coordinates = ${itemX} , ${itemY}`;
+        }
+
+        //-------------------EVENTOS DE CLICK ABAIXO----------------//
+        for (let i = 0; i < 256; i++)
+            {
             const chunk = document.createElement("div");
             chunk.classList.add("chunk");
-            chunk.dataset.chunkIndex = i;
             gameCanvas.appendChild(chunk);
 
             chunk.addEventListener("click", () => {
                 const chunkRow = Math.floor(i / 16);
                 const chunkCol = i % 16;
 
-                playerCoordX = chunkCol * chunkSize + chunkSize / 32 - player.offsetWidth / 32;
-                playerCoordY = chunkRow * chunkSize + chunkSize / 32 - player.offsetHeight / 32;
+                playerCoordX = chunkCol * chunkSize + chunkSize / 2 - player.offsetWidth / 2;
+                playerCoordY = chunkRow * chunkSize + chunkSize / 2 - player.offsetHeight / 2;
 
+                checkCollisionPlayer();
                 player.style.transform = `translate(${playerCoordX}px, ${playerCoordY}px)`;
+                debug.innerHTML = `Click player coordinates:  ${playerCoordX} , ${playerCoordY}`;
             });
         }
 
-        // Inicializar posição do jogador
-        player.style.transform = `translate(${playerCoordX}px, ${playerCoordY}px)`;
+        //-----------------PLAYER COLLISION ONLY-----------------//
+        function checkCollisionPlayer()
+        {
+            const playerRect = player.getBoundingClientRect();
+            const itemRect = item.getBoundingClientRect();
 
-        // Atualiza chunks ao mover o jogador
-        function updateChunks() {
-            const currentChunkX = Math.floor(playerX / chunkSize);
-            const currentChunkY = Math.floor(playerY / chunkSize);
+            return !(
+                playerRect.right < itemRect.left ||
+                playerRect.left > itemRect.right ||
+                playerRect.bottom < itemRect.top ||
+                playerRect.top > itemRect.bottom
+            );
 
-            // Carregar chunks ao redor do jogador (3x3)
-            for (let x = -1; x <= 1; x++) {
-                for (let y = -1; y <= 1; y++) {
-                    loadChunk(currentChunkX + x, currentChunkY + y);
-                }
-            }
+            return true;
         }
 
-        // Movimentação do jogador
+        //-----------------STYLE COLLISION ONLY-----------------//
+        function checkCollision(rect1, rect2)
+        {
+            var rect1v = rect1.getBoundingClientRect();
+            var rect2v = rect2.getBoundingClientRect();
+
+            return!(
+                rect1v.right < rect2v.left ||
+                rect1v.left > rect2v.right ||
+                rect1v.bottom < rect2v.top ||
+                rect1v.top > rect2v.bottom
+            );
+        }
+
+        // Atualizar posição do jogador via teclado
         document.addEventListener("keydown", (e) => {
-            
             switch (e.key)
             {
                 case "ArrowUp":
-                    playerCoordY -= 10;
+                    playerCoordY = Math.max(0, playerCoordY - chunkSize);
                     break;
                 case "ArrowDown":
-                    playerCoordY += 10;
+                    playerCoordY = Math.min(529 - player.offsetHeight, playerCoordY + chunkSize);
                     break;
                 case "ArrowLeft":
-                    playerCoordX -= 10;
+                    playerCoordX = Math.max(0, playerCoordX - chunkSize);
                     break;
                 case "ArrowRight":
-                    playerCoordX += 10;
+                    playerCoordX = Math.min(529 - player.offsetWidth, playerCoordX + chunkSize);
                     break;
             }
 
-            // Atualizar posição do jogador
             player.style.transform = `translate(${playerCoordX}px, ${playerCoordY}px)`;
 
-            // Atualizar chunks
-            updateChunks();
-          
+            // Verificar colisão com o item
+            if (checkCollisionPlayer() == true)
+                {
+                debug1.innerText = "Collision detected!";
+                placeItem(); // Reposicionar o item
 
-        // Inicializar o primeiro chunk
-            updateChunks();
+                    //-----------------COLLISION CHECKING-----------------//
+                    //-----------------INVENTORY VIEWING-----------------//
+                    addToInventory(item);
 
+                    inventoryContainer.innerHTML = `INVENTORY = ${
+                        inventory.forEach(function(inventory) {
+                            inventory
+                        })
+                    }`;
+            }
+            else
+            {
+                debug1.innerText = "No collision.";
+            }
 
-        // Limitar jogador dentro da área
-        
-        if (playerCoordX < 0) {
-            playerCoordX = 0;
-        } else if (playerCoordX > gameCanvas.offsetWidth - player.offsetWidth) {
-            playerCoordX = gameCanvas.offsetWidth - player.offsetWidth;
-        }
-    
-        if (playerCoordY < 0) {
-            playerCoordY = 0;
-        } else if (playerCoordY > gameCanvas.offsetHeight - player.offsetHeight) {
-            playerCoordY = gameCanvas.offsetHeight - player.offsetHeight;
-        }
+            debug.innerText = `Player Position: (${playerCoordX}, ${playerCoordY})`;
+            
+        });
+        // Inicializar o jogo
+        placeItem();
 
-        player.style.top = `${playerCoordY}px`;
-        player.style.left = `${playerCoordX}px`;
-        
-        // Atualizar posição no debug
-        debug.innerHTML = `X= ${playerCoordX} , Y= ${playerCoordY}`;
-        debug.style.color = "#fff";
+        //-----------------INVENTORY-----------------//
 
-        // Verificar colisão
-        const playerRect = player.getBoundingClientRect();
-        const itemRect = item.getBoundingClientRect();
-        
-        if (collision(playerRect, itemRect) == true && collisionWithItem() == true) {
-            let item = document.getElementById("item");
-            debug1.innerHTML = "collision player + item = True";
-            debug1.style.color = "#fff";
-            collisionWithItem();
-        }
+        let inventory = {};
 
-        
-    let pv = window.getComputedStyle(player);
-    let pvtX = parseInt(pv.getPropertyValue("translateX"));
-    let pvtY = parseInt(pv.getPropertyValue("translateY"));
-    let iv = window.getComputedStyle(item);
-    let ivtX = parseInt(pv.getPropertyValue("translateX"));
-    let ivtY = parseInt(pv.getPropertyValue("translateY"));
-        
-        if(
-            !(
-                (pvtX > ivtX && pvtY > ivtY)||
-                (pvtx == ivtx && pvtY == ivtY)
-            ) 
-        )
+        function addToInventory(item)
         {
-            debug1.innerHTML = "collision player + item = True";
-            debug1.style.color = "#fff";
-            collisionWithItem();
+            let debug5 = document.getElementById("debug5");
+            if(inventory[item.id])
+            {
+                inventory[item.id]++;
+            }else{
+                inventory[item.id] = 1;
+            }
+            debug5.innerHTML = `item ${item.id} was add into inventory`;
         }
-        
-    });
 
+        //----------------ITEMS-----------------//
 
-    function collision(playerRect, itemRect) {
-        return !(
-            (playerRect.right < itemRect.left ||
-            playerRect.left > itemRect.right ||
-            playerRect.bottom < itemRect.top ||
-            playerRect.top > itemRect.bottom)
-        );
-    }
+        let axe = document.getElementById("axe");
+        let pickaxe = document.getElementById("pickaxe");
+        let sword = document.getElementById("sword");
+        let hammer = document.getElementById("hammer");
+        let bread = document.getElementById("bread");
 
-    function collisionWithItem()
-    {
-            let item = document.getElementById("item");
-            let debug0 = document.getElementById("debug1");
-            item.style.height = 0;
-            item.style.width = 0;
-            item.style.left = "-30px";
-            item.style.top = "-30px";
-            debug0.innerHTML += "\nItemDrop = true";
-            debug0.style.color = "#fff";
-            return true;
-    }
+        let items = {
+            axe,
+            pickaxe,
+            sword,
+            hammer,
+            bread
+        };
 
-    let inventoryItems = 4;
-    let inventory = {};
-    let inventoryActualItems = 4;
-    let item1 = "green object";
+        let qtdtAxe = 0;
+        let qtdtPickaxe = 0;
 
-    function invAdministrator()
-    {   
-        if(collisionWithItem() == true)
-        {
-            inventory+=item1;
-        }
-    }
+        //-----------------ADD STYLE TO ITEMS-----------------//
+        axe.style.height = "49px";
+        axe.style.width = "49px";
+        axe.style.border = "1px solid #f00";//provisory
+        axe.style.backgroundImage = "url(/main/textures/weaponsW.png)";
+        axe.style.backgroundPosition = "-384px -289px";
+        axe.style.backgroundSize = "auto";
+
+        pickaxe.style.height = "49px";
+        pickaxe.style.width = "49px";
+        pickaxe.style.border = "1px solid #0f0";//provisory
+        pickaxe.style.backgroundImage = "url(/main/textures/weaponsW.png)";
+        pickaxe.style.backgroundPosition = "-243px -288px";
+        pickaxe.style.backgroundSize = "auto";
+
+        sword.style.height = "49px";
+        sword.style.width = "49px";
+        sword.style.border = "1px solid #00f";//provisory
+        sword.style.backgroundImage = "url(/main/textures/WeaponsW.png)";
+        sword.style.backgroundPosition = "-3px -342px";
+        //-----------------PLAYER STATS-----------------//
+        //FLOAT
+
+        let playerExperience = 0.0;
+        let playerLife = 0.0;
+        let playerEnergy = 0.00;
