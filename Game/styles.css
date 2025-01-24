@@ -1,4 +1,4 @@
-    *
+*
         {
             margin: 0;
             padding: 0;
@@ -67,7 +67,7 @@
             height: 23px;
             width: 23px;
             background: red;
-            transition: transform 0.3s;
+            transition: transform 0.1s;
         }
 
         * {
@@ -100,12 +100,94 @@
             border: 3px solid #fff;
         }
 
-#debug
+        #debug
+        {
+            color: #fff;
+        }
+
+        #debug1
+        {
+            color: #fff;
+        }
+
+        #debug3
+        {
+            color: #fff;
+        }
+
+        #block
+        {
+            position: absolute;
+            height: 23px;
+            width: 23px;
+            top: 10;
+            left: 10;
+            background: #ff0;
+            border: 1px solid #f00;
+        }
+
+        @keyframes break
+        {
+            0%
+            {
+                transform: translateY(7px);
+            }
+            50%
+            {
+                transform: translateY(0px);
+            }
+            100%
+            {
+                transform: translateY(-7px);
+            }
+        }
+
+        @keyframes drop
+        {
+            0%
+            {
+                transform: translateY(3px);
+            }
+            50%
+            {
+                transform: translateY(0px);
+            }
+            100%
+            {
+                transform: translateY(-3px);
+            }
+        }
+
+        #buttonControls
+        {
+            color: #fff;
+        }
+
+        #debug6
+        {
+            color: #0f0;
+        }
+
+#container
 {
-    color: #fff;
+    display: flex;
+    flex-direction: row;
 }
 
-#debug1
+#controls
 {
-    color: #fff;
+    width: 251px;
+    height: 529px;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid#fff;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: space-between;
+}
+
+#debugs
+{
+    font-size: 11px;
 }
