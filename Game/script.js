@@ -23,6 +23,8 @@
 
         inventoryContainer.style.color = "#fff";
         debug5.style.color = "#fff";
+        block.style.left = "200px";
+        block.style.top = "201px";
 
         //-----------------GENERATE ITEM-----------------//
         function placeItem() {
@@ -55,7 +57,6 @@
                 checkCollisionPlayer();
                 player.style.transform = `translate(${playerCoordX}px, ${playerCoordY}px)`;
                 debug.innerHTML = `Click player coordinates:  ${playerCoordX} , ${playerCoordY}`;
-                    
             });
         }
 
@@ -90,7 +91,7 @@
         }
 
         // Atualizar posição do jogador via teclado
-        document.addEventListener("keydown", (e) => {
+        /*document.addEventListener("keydown", (e) => {
             switch (e.key)
             {
                 case "ArrowUp":
@@ -191,6 +192,7 @@
 
 
         });
+*/
         // Inicializar o jogo
         placeItem();
 
@@ -263,3 +265,83 @@
         let playerExperience = 0.0;
         let playerLife = 0.0;
         let playerEnergy = 0.00;
+
+
+        //-----------------PLAYER MOVIMENT------------------//
+        document.addEventListener("keydown", (e) => {
+            switch (e.key)
+            {
+                case "ArrowUp":
+                    playerCoordY = Math.max(0, playerCoordY - chunkSize);
+                    break;
+                case "ArrowDown":
+                    playerCoordY = Math.min(529 - player.offsetHeight, playerCoordY + chunkSize);
+                    break;
+                case "ArrowLeft":
+                    playerCoordX = Math.max(0, playerCoordX - chunkSize);
+                    break;
+                case "ArrowRight":
+                    playerCoordX = Math.min(529 - player.offsetWidth, playerCoordX + chunkSize);
+                    break;
+            }
+
+            player.style.transform = `translate(${playerCoordX}px, ${playerCoordY}px)`;
+
+            // Verificar colisão com o item
+            if (checkCollisionPlayer() == true)
+                {
+                debug1.innerText = "Collision detected!";
+                placeItem(); // Reposicionar o item
+
+                    //-----------------COLLISION CHECKING-----------------//
+                    //-----------------INVENTORY VIEWING-----------------//
+                    addToInventory(item);
+
+                    inventoryContainer.innerHTML = `INVENTORY = ${
+                        inventory.forEach(function(inventory) {
+                            inventory
+                        })
+                    }`;
+            }
+            else
+            {
+                debug1.innerText = "No collision.";
+            }
+        
+            let block = document.getElementById("block");
+
+            let rect1v1 = player.getBoundingClientRect();
+            let rect2v2 = block.getBoundingClientRect();
+
+            if(!(
+                rect1v1.right < rect2v2.left ||
+                rect1v1.left > rect2v2.right ||
+                rect1v1.bottom < rect2v2.top ||
+                rect1v1.top > rect2v2.bottom
+            ))
+            {
+                controlButtons.innerHTML = `
+                    <button id="breakerButton">Break Block</button>
+                `;
+
+                
+                const breakerButton = document.getElementById("breakerButton");
+                breakerButton.addEventListener("click", function ()
+                {
+                            block.style.animationName = "drop";
+                            block.style.animationDuration = "infinite";
+                            isDropped = true;
+                });
+            }
+            else
+            {
+                const breakerButton = document.getElementById("breakerbutton");
+                if(breakerButton)
+                {
+                    breakerButton.remove();
+                }
+            }
+
+        }
+    );
+    
